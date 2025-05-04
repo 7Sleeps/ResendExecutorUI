@@ -1,0 +1,389 @@
+/* --- Base and Reset --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    /* Colors - Sampled from image_36c1cf.jpg */
+    --bg-primary: #111111;
+    --bg-secondary: #191919; /* Slightly lighter elements */
+    --bg-tertiary: #222222;  /* Hover states */
+    --border-color: #333333;
+    --text-primary: #ffffff;
+    --text-secondary: #bbbbbb; /* Slightly dimmer */
+    --text-muted: #888888;
+
+    --sidebar-width: 240px;
+    --sidebar-active-bg: #000000;
+    --sidebar-active-border: #ffffff;
+    --sidebar-hover-bg: var(--bg-tertiary);
+
+    --button-text: var(--text-secondary);
+    --button-border: var(--border-color);
+    --button-hover-bg: var(--bg-tertiary);
+    --button-hover-text: var(--text-primary);
+
+    --tab-bg: var(--bg-primary);
+    --tab-border: var(--border-color);
+    --tab-inactive-bg: #2d2d2d; /* From previous example, adjust if needed */
+    --tab-active-bg: var(--bg-primary);
+    --tab-active-border: var(--text-primary); /* Underline for active tab */
+    --tab-text-active: var(--text-primary);
+    --tab-text-inactive: var(--text-muted);
+    --tab-close-hover-bg: #444444;
+
+    --input-bg: var(--bg-secondary);
+    --input-border: var(--border-color);
+    --input-text: var(--text-primary);
+    --input-focus-border: var(--text-secondary);
+
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 14px;
+    line-height: 1.5;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* --- Layout --- */
+.app-layout {
+    display: flex;
+    height: 100vh;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--bg-primary);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    padding: 16px 0;
+}
+
+.sidebar-header {
+    padding: 8px 20px 24px 20px; /* More padding */
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.sidebar-nav {
+    flex-grow: 1;
+    padding: 0 12px; /* Padding for nav links */
+}
+
+.sidebar-nav ul {
+    list-style: none;
+}
+
+.sidebar-nav .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px; /* Padding inside link */
+    margin-bottom: 4px; /* Space between links */
+    border-radius: 6px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.15s ease, color 0.15s ease;
+    position: relative;
+}
+
+.sidebar-nav .nav-link:hover {
+    background-color: var(--sidebar-hover-bg);
+    color: var(--text-primary);
+}
+
+.sidebar-nav .nav-link.active {
+    background-color: var(--sidebar-active-bg); /* Black background */
+    color: var(--text-primary);
+}
+
+/* Active indicator line (like in image) */
+.sidebar-nav .nav-link.active::before {
+    content: '';
+    position: absolute;
+    left: -12px; /* Position outside padding */
+    top: 4px;
+    bottom: 4px;
+    width: 3px;
+    background-color: var(--sidebar-active-border);
+    border-radius: 0 3px 3px 0;
+}
+
+
+.sidebar-nav .icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 12px;
+    stroke-width: 2;
+    flex-shrink: 0;
+    fill: none;
+    stroke: currentColor;
+}
+
+.sidebar-footer {
+    padding: 16px 20px 0 20px;
+    margin-top: auto;
+    border-top: 1px solid var(--border-color);
+}
+.sidebar-footer a {
+    display: flex;
+    align-items: center;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+}
+.sidebar-footer a:hover {
+    color: var(--text-primary);
+}
+.sidebar-footer .icon {
+     width: 16px;
+     height: 16px;
+     margin-right: 8px;
+     stroke-width: 2;
+     fill: none;
+     stroke: currentColor;
+}
+
+
+/* --- Main Content Area --- */
+.content-area {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Prevent content area scroll */
+}
+
+/* --- Content Header --- */
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.content-header h1 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.header-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    background: none;
+    line-height: 1.4; /* Adjust for icon alignment */
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--button-text);
+    border-color: var(--button-border);
+}
+
+.btn-secondary:hover {
+    background-color: var(--button-hover-bg);
+    border-color: var(--button-border);
+    color: var(--button-hover-text);
+}
+
+.btn .icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+}
+.btn .icon.icon-sm { /* Allow smaller icons */
+    width: 14px;
+    height: 14px;
+}
+
+/* --- Section Switching --- */
+.main-section {
+    display: none; /* Hide sections by default */
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: hidden;
+}
+.main-section.active-section {
+    display: flex; /* Show the active section */
+}
+
+
+/* --- Tab Bar --- */
+.tab-bar {
+    display: flex;
+    background-color: var(--tab-bg);
+    border-bottom: 1px solid var(--tab-border);
+    height: 40px; /* Adjust height as needed */
+    flex-shrink: 0;
+    overflow-x: auto;
+    padding-left: 16px; /* Add some left padding */
+}
+
+.tab {
+    display: flex;
+    align-items: center;
+    padding: 0 12px; /* Horizontal padding */
+    border-right: 1px solid var(--tab-border);
+    cursor: pointer;
+    background-color: transparent; /* Tabs blend with bg */
+    color: var(--tab-text-inactive);
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    position: relative;
+    transition: color 0.15s ease;
+    height: 100%; /* Fill tab bar height */
+}
+
+.tab:hover {
+    color: var(--tab-text-active);
+}
+
+.tab.active {
+    color: var(--tab-text-active);
+}
+/* Active tab underline indicator */
+.tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0px; /* Align with bottom border */
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--tab-active-border);
+}
+
+.tab-name {
+    margin-right: 8px;
+    user-select: none;
+}
+
+.tab-close {
+    margin-left: 4px; /* Space before close button */
+    padding: 2px;
+    border-radius: 4px;
+    font-size: 16px;
+    line-height: 1;
+    color: var(--text-muted);
+}
+.tab-close:hover {
+    background-color: var(--tab-close-hover-bg);
+    color: var(--text-primary);
+}
+
+/* --- Editor Container --- */
+.editor-container {
+    flex-grow: 1;
+    overflow: hidden; /* Monaco handles scroll */
+    /* Background is set by Monaco theme */
+}
+
+/* --- Settings Section --- */
+.settings-section {
+    padding: 24px;
+    overflow-y: auto; /* Allow scrolling if settings grow */
+    background-color: var(--bg-primary); /* Match rest of UI */
+}
+
+.settings-section h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 16px;
+}
+
+.settings-group {
+    margin-bottom: 32px;
+}
+
+.settings-group h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--text-secondary);
+}
+
+.setting-item {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column; /* Stack label and control */
+    gap: 6px;
+}
+
+.setting-item label {
+    display: flex; /* For checkbox alignment */
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer; /* For checkbox labels */
+}
+
+.setting-item input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--text-primary); /* Style the checkbox color */
+}
+
+.setting-item select,
+.setting-item input[type="text"] /* Add other input types if needed */ {
+    width: 100%;
+    max-width: 300px; /* Limit width of inputs */
+    padding: 8px 12px;
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--input-text);
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.setting-item select:focus,
+.setting-item input:focus {
+    outline: none;
+    border-color: var(--input-focus-border);
+    box-shadow: 0 0 0 2px rgba(187, 187, 187, 0.2); /* Subtle focus ring */
+}
+
+/* --- Scrollbars (Webkit) --- */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--text-muted);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
